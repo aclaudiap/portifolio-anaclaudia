@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aclaudIA — Descomplicando a IA | Case · Ana Claudia Pereira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F2F0E6;
+    --paper-2: #EAE7D9;
+    --ink: #1E2A38;
+    --ink-soft: #4B5A67;
+    --rule: #C9C4B0;
+    --ochre: #A97423;
+    --teal: #2B655F;
+    --brick: #9B4430;
+    --plum: #5F4370;
+    --card-bg: #FBFAF5;
+    --max: 880px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  body{
+    margin:0; background: var(--paper); color: var(--ink);
+    font-family:'IBM Plex Sans', sans-serif; font-size:16px; line-height:1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: var(--ink); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--ochre); outline-offset:3px; }
+  .wrap{ max-width: var(--max); margin:0 auto; padding: 0 24px; }
+
+  .topbar{ position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:1px solid var(--rule); }
+  .topbar-inner{ max-width: var(--max); margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .backlink{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; text-decoration:none; color: var(--ink-soft); display:flex; align-items:center; gap:8px; }
+  .backlink:hover{ color: var(--ink); }
+  .entry-no{ font-family:'IBM Plex Mono', monospace; font-size:12px; color: var(--ink-soft); }
+
+  .hero{ padding: 64px 0 40px; border-bottom:1px solid var(--rule); }
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color: var(--teal); border:1px solid var(--teal); border-radius:999px; padding:6px 14px; margin-bottom:22px;
+  }
+  .badge::before{ content:"●"; font-size:8px; }
+  h1{
+    font-family:'Newsreader', serif; font-weight:500; font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+    line-height:1.06; margin:0 0 16px; letter-spacing:-0.01em;
+  }
+  .subtitle{ font-family:'Newsreader', serif; font-style:italic; font-size:1.25rem; color: var(--ink-soft); max-width:58ch; margin: 0 0 28px; }
+  .meta-row{ display:flex; flex-wrap:wrap; gap: 10px 26px; font-family:'IBM Plex Mono', monospace; font-size:12.5px; color: var(--ink-soft); }
+  .meta-row b{ color: var(--ink); font-weight:600; }
+
+  section{ padding: 52px 0; border-bottom:1px solid var(--rule); }
+  section:last-of-type{ border-bottom:none; }
+  .section-label{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
+    color: var(--ochre); margin-bottom:20px; display:flex; align-items:center; gap:10px;
+  }
+  .section-label span.n{ color: var(--ink-soft); }
+  h2.title{ font-family:'Newsreader', serif; font-weight:500; font-size:1.6rem; margin:0 0 18px; }
+  p{ max-width: 66ch; margin: 0 0 16px; }
+  p.lead{ font-size: 1.05rem; }
+
+  /* fundação: 3-col por quê / pra quê / pra quem */
+  .fund-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  @media (max-width:760px){ .fund-grid{ grid-template-columns:1fr; } }
+  .fund-card{ background: var(--card-bg); border:1px solid var(--rule); border-radius:8px; padding:20px; }
+  .fund-card .k{ font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color: var(--teal); display:block; margin-bottom:10px; }
+  .fund-card p{ font-size:0.93rem; margin:0; color: var(--ink); max-width: none; }
+
+  /* jornada */
+  .journey{ display:grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top:8px; position:relative; }
+  @media (max-width:760px){ .journey{ grid-template-columns:1fr; } }
+  .journey-step{ padding: 22px; border:1px solid var(--rule); position:relative; }
+  .journey-step + .journey-step{ border-left: none; }
+  @media (max-width:760px){ .journey-step + .journey-step{ border-left:1px solid var(--rule); border-top:none; } }
+  .journey-step .tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+  .journey-step:nth-child(1) .tag{ color: var(--ochre); }
+  .journey-step:nth-child(2) .tag{ color: var(--teal); }
+  .journey-step:nth-child(3) .tag{ color: var(--brick); }
+  .journey-step h3{ font-family:'Newsreader', serif; font-size:1.25rem; margin:10px 0 10px; font-weight:600; }
+  .journey-step p{ font-size:0.92rem; color: var(--ink-soft); margin:0; }
+  .journey-arrow{ display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono', monospace; color: var(--ink-soft); }
+
+  /* públicos - 3 perfis */
+  .profiles{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; margin-top:8px; }
+  @media (max-width:760px){ .profiles{ grid-template-columns:1fr; } }
+  .profile{ border:1px dashed var(--rule); border-radius:8px; padding:18px; }
+  .profile .num{ font-family:'Newsreader', serif; font-size:1.4rem; font-weight:600; color: var(--plum); display:block; margin-bottom:8px; }
+  .profile h4{ font-family:'Newsreader', serif; font-size:1.02rem; margin:0 0 8px; font-weight:600; }
+  .profile p{ font-size:0.9rem; color: var(--ink-soft); margin:0; }
+  .profile-note{ font-size:0.92rem; color: var(--ink-soft); margin-top:20px; border-left:3px solid var(--ochre); padding-left:14px; max-width:62ch; }
+
+  /* medição - antes/depois */
+  .measure-flow{ display:flex; align-items:stretch; gap:0; margin: 22px 0 20px; flex-wrap:wrap; }
+  .measure-card{ flex:1; min-width:220px; background: var(--card-bg); border:1px solid var(--rule); border-radius:8px; padding:20px; }
+  .measure-card .k{ font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color: var(--teal); display:block; margin-bottom:10px; }
+  .measure-card p{ font-size:0.92rem; margin:0; max-width:none; }
+  .measure-mid{ display:flex; align-items:center; justify-content:center; padding: 0 14px; font-family:'Newsreader', serif; font-style:italic; color: var(--ink-soft); }
+  @media (max-width:600px){ .measure-mid{ padding: 10px 0; } }
+
+  /* meta: estratégia de portfólio */
+  .strategy-item{ display:flex; gap:16px; padding: 18px 0; border-bottom:1px dotted var(--rule); }
+  .strategy-item:last-child{ border-bottom:none; }
+  .strategy-item .mk{ font-family:'IBM Plex Mono', monospace; font-size:11px; color: var(--brick); border:1px solid var(--brick); border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+  .strategy-item h4{ font-family:'Newsreader', serif; font-size:1.02rem; margin:0 0 6px; font-weight:600; }
+  .strategy-item p{ font-size:0.92rem; color: var(--ink-soft); margin:0; }
+
+  /* próximos passos */
+  .next-list{ list-style:none; margin:0; padding:0; }
+  .next-list li{ display:flex; gap:12px; padding:10px 0; border-bottom:1px dotted var(--rule); font-size:0.94rem; }
+  .next-list li::before{ content:"—"; color: var(--ink-soft); flex-shrink:0; }
+  .next-list li:last-child{ border-bottom:none; }
+
+  .why blockquote{
+    font-family:'Newsreader', serif; font-style:italic; font-size:1.2rem; line-height:1.55;
+    margin: 0; padding-left: 22px; border-left: 3px solid var(--teal); color: var(--ink); max-width: 60ch;
+  }
+
+  .contact{ padding: 60px 0 40px; }
+  .contact h2{ font-family:'Newsreader', serif; font-weight:500; font-style:italic; font-size:1.9rem; max-width:20ch; margin:0 0 16px; }
+  .contact p{ color: var(--ink-soft); margin-bottom:26px; }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .cta{ font-family:'IBM Plex Mono', monospace; font-size:13px; padding:12px 20px; text-decoration:none; border:1px solid var(--ink); color:var(--ink); border-radius:4px; }
+  .cta.primary{ background: var(--ink); color: var(--paper); }
+  .cta:hover{ background: var(--ochre); border-color: var(--ochre); color:#fff; }
+
+  footer{ border-top:1px solid var(--rule); padding:22px 0 40px; font-family:'IBM Plex Mono', monospace; font-size:11.5px; color: var(--ink-soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="backlink" href="index.html">← voltar ao portfólio</a>
+    <span class="entry-no">CASE · EM CONSTRUÇÃO</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="badge">Fundação definida — jornada em desenho</span>
+    <h1>aclaudIA<br>Descomplicando a IA</h1>
+    <p class="subtitle">Uma imersão em IA para quem não é especialista em tecnologia — pensada para aproximar, não para dar aula.</p>
+    <div class="meta-row">
+      <span><b>Formato</b> · Imersão autoinstrucional</span>
+      <span><b>Público</b> · Não-especialistas em tecnologia</span>
+      <span><b>Autoria</b> · Ana Claudia Pereira</span>
+      <span><b>Status</b> · Fundação e jornada definidas</span>
+    </div>
+  </header>
+
+  <!-- FUNDAÇÃO: POR QUÊ / PRA QUÊ / PRA QUEM -->
+  <section id="fundacao">
+    <div class="section-label"><span class="n">§01</span> Fundação do projeto</div>
+    <div class="fund-grid">
+      <div class="fund-card">
+        <span class="k">Por quê — o problema</span>
+        <p>Muitas pessoas já convivem com IA no dia a dia, mas não entendem como ela funciona, quais são seus limites, nem como usá-la de forma consciente.</p>
+      </div>
+      <div class="fund-card">
+        <span class="k">Pra quê — o propósito</span>
+        <p>Aproximar pessoas da inteligência artificial por meio de conhecimento acessível, reduzindo barreiras e aumentando autonomia.</p>
+      </div>
+      <div class="fund-card">
+        <span class="k">Pra quem — o público</span>
+        <p>Pessoas que não são especialistas em tecnologia, mas querem entender a IA que já faz parte da vida delas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JORNADA -->
+  <section id="jornada">
+    <div class="section-label"><span class="n">§02</span> A jornada — como</div>
+    <p class="lead" style="margin-top:-8px;">Três etapas, nessa ordem por um motivo: primeiro dar chão comum, depois profundidade, depois efeito multiplicador.</p>
+    <div class="journey">
+      <div class="journey-step">
+        <span class="tag">Etapa 1</span>
+        <h3>Nivelar</h3>
+        <p>Criar uma base comum sobre IA — um ponto de partida que acolhe quem chega de lugares muito diferentes de entendimento.</p>
+      </div>
+      <div class="journey-step">
+        <span class="tag">Etapa 2</span>
+        <h3>Letrar</h3>
+        <p>Desenvolver entendimento e uso consciente — ir além do "sei usar" para o "sei por que funciona assim e onde confiar".</p>
+      </div>
+      <div class="journey-step">
+        <span class="tag">Etapa 3</span>
+        <h3>Disseminar</h3>
+        <p>Multiplicar conhecimento e estimular uma cultura de aprendizagem — a pessoa que aprendeu passa a espalhar isso adiante.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRÊS PÚBLICOS -->
+  <section id="publicos">
+    <div class="section-label"><span class="n">§03</span> Três públicos, um ponto de partida</div>
+    <p class="lead" style="margin-top:-8px;">O público não é um perfil único. A imersão precisa acolher três formas diferentes de chegar até a IA — sem corrigir ou julgar nenhuma delas de cara.</p>
+    <div class="profiles">
+      <div class="profile">
+        <span class="num">01</span>
+        <h4>Mágica / misteriosa</h4>
+        <p>Trata a IA como caixa-preta onipotente — não faz ideia do que acontece por trás.</p>
+      </div>
+      <div class="profile">
+        <span class="num">02</span>
+        <h4>Ameaça</h4>
+        <p>Vê a IA como substituição — do trabalho, ou do próprio pensamento.</p>
+      </div>
+      <div class="profile">
+        <span class="num">03</span>
+        <h4>Uso automático, sem questionar</h4>
+        <p>Já usa no dia a dia, mas copia e aceita respostas sem checar — confia demais.</p>
+      </div>
+    </div>
+    <p class="profile-note">O Nivelar existe justamente para dar um ponto de partida comum a esses três perfis — nem que seja só a ponta do fio para a pessoa buscar mais informação por conta própria.</p>
+  </section>
+
+  <!-- MEDIÇÃO -->
+  <section id="medicao">
+    <div class="section-label"><span class="n">§04</span> Como medir uma transformação de pensamento</div>
+    <p class="lead" style="margin-top:-8px;">A mudança não é medida por prova ou nota — é medida por autorreflexão comparativa, feita pela própria pessoa.</p>
+    <div class="measure-flow">
+      <div class="measure-card">
+        <span class="k">Momento zero</span>
+        <p>Antes de qualquer conteúdo, a pessoa responde livremente: <em>"o que você entende hoje sobre inteligência artificial?"</em> A resposta fica guardada só com ela — não é corrigida, não é julgada.</p>
+      </div>
+      <div class="measure-mid">→</div>
+      <div class="measure-card">
+        <span class="k">Fechamento da jornada</span>
+        <p>Ao fim do Disseminar, a pessoa relê sua resposta inicial e responde: <em>"agora, o que você sabe? O que mudou?"</em></p>
+      </div>
+    </div>
+    <p style="font-size:0.94rem; color: var(--ink-soft);">O contraste entre as duas respostas <em>da própria pessoa</em> é a evidência de transformação — não um gabarito externo. Coerente com o objetivo do projeto: o que importa é ampliar a capacidade de pensar sobre IA, não decorar definições.</p>
+    <p style="font-size:0.87rem; color: var(--ink-soft); font-family:'IBM Plex Mono', monospace;">Evolução futura de plataforma (fora do MVP): campo de comentário/compartilhamento na resposta final, conectando com a etapa Disseminar.</p>
+  </section>
+
+  <!-- ESTRATÉGIA DE PORTFÓLIO -->
+  <section id="estrategia">
+    <div class="section-label"><span class="n">§05</span> Como este case está sendo construído</div>
+    <p class="lead" style="margin-top:-8px;">O projeto serve dois propósitos ao mesmo tempo, e a construção reflete isso de propósito.</p>
+    <div class="strategy-item">
+      <span class="mk">01</span>
+      <div>
+        <h4>Case de portfólio — a peça central</h4>
+        <p>Como ainda não há experiência formal na área, o foco está em demonstrar <em>processo</em> de design instrucional: diagnóstico, decisões de jornada, desenho do mecanismo de avaliação, o que foi descartado e por quê. Provar raciocínio, não depender de currículo.</p>
+      </div>
+    </div>
+    <div class="strategy-item">
+      <span class="mk">02</span>
+      <div>
+        <h4>Amostra do curso — evidência de execução</h4>
+        <p>Um único tópico da etapa Nivelar, desenvolvido com qualidade final (texto + imagem + microexercício) — um gancho de curiosidade, sem entregar a jornada inteira, para não ser copiado. <a href="amostra-aclaudia.html" style="text-decoration:underline;">Ver a amostra completa →</a></p>
+      </div>
+    </div>
+    <div class="strategy-item">
+      <span class="mk">03</span>
+      <div>
+        <h4>Persona fictícia — validação simulada</h4>
+        <p>Simular a jornada de um perfil (ex: "Marina, 34, RH, usa IA mas não confia") respondendo ao momento zero e à pergunta final, para demonstrar o mecanismo de medição funcionando de ponta a ponta.</p>
+      </div>
+    </div>
+    <div class="strategy-item">
+      <span class="mk">04</span>
+      <div>
+        <h4>Validação real (n=1) — mais forte que a persona</h4>
+        <p>Enviar a amostra para uma pessoa real, coletando — com permissão — a resposta real de antes e depois. Mesmo sendo um único caso, pesa mais do que a simulação.</p>
+      </div>
+    </div>
+    <p style="font-size:0.9rem; color: var(--ink-soft); margin-top:18px;">O material tem destino duplo: pode ser enviado informalmente para validação pessoal <em>e</em> usado como pitch para uma empresa — sem publicar o curso completo.</p>
+  </section>
+
+  <!-- PRÓXIMOS PASSOS -->
+  <section id="proximos">
+    <div class="section-label"><span class="n">§06</span> Próximos passos</div>
+    <ul class="next-list">
+      <li>Desenho detalhado da jornada: por que Nivelar → Letrar → Disseminar nessa ordem, decisões dentro de cada etapa, o que foi descartado.</li>
+      <li>Escolha do tópico do Nivelar que vira a amostra completa — hipótese de trabalho: "IA não é mágica, é tecnologia".</li>
+      <li>Desenvolvimento da persona fictícia (Marina) para simulação do mecanismo de avaliação.</li>
+    </ul>
+  </section>
+
+  <section id="motivacao" class="why">
+    <div class="section-label"><span class="n">§07</span> Por que eu quero criar isso</div>
+    <blockquote>"Passei os últimos anos traduzindo tecnologia complexa pra times técnicos. A aclaudIA é a versão dessa mesma habilidade voltada pra quem nunca teve essa ponte — porque a IA não deveria ser privilégio de quem já fala a língua dela."</blockquote>
+  </section>
+
+  <section id="contato" class="contact">
+    <div class="section-label"><span class="n">§08</span> Contato</div>
+    <h2>Quer conversar sobre esse projeto?</h2>
+    <p>Aberta a parcerias, feedback ou oportunidades para tirar a aclaudIA do papel.</p>
+    <div class="cta-row">
+      <a class="cta primary" href="mailto:anaclaudiapcs@gmail.com">Enviar e-mail</a>
+      <a class="cta" href="amostra-aclaudia.html">Ver amostra do curso →</a>
+      <a class="cta" href="index.html">← Voltar ao portfólio</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:8px;">
+    <span>Santos/SP, Brasil</span>
+    <span>aclaudIA — projeto conceitual, agosto de 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
